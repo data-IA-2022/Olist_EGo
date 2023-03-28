@@ -1,6 +1,8 @@
 # Olist_EGo
 Exemple projet Olist
 
+![olist - public.png](olist%20-%20public.png)
+
 # Table geolocation bis:
 
 ```roomsql
@@ -19,5 +21,22 @@ insert into olist_geolocation_bis (
 	, count(*) as N
   from olist_geolocation G
   group by G.geolocation_zip_code_prefix
+);
+```
+
+## Table sellers et customers
+Suppression des zip codes inconnus dans geolocation (2 tables):
+```roomsql
+select S.seller_zip_code_prefix 
+from olist_sellers S
+left join olist_geolocation_bis G on (S.seller_zip_code_prefix=G.zip_code)
+where G.zip_code is null;
+
+update olist_sellers set seller_zip_code_prefix =null 
+where seller_zip_code_prefix in (
+select S.seller_zip_code_prefix 
+from olist_sellers S
+left join olist_geolocation_bis G on (S.seller_zip_code_prefix=G.zip_code)
+where G.zip_code is null
 );
 ```
