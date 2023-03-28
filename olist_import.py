@@ -12,6 +12,7 @@ fns = glob.glob(config['olist_csv']+"/*.csv")
 
 dtype = {'customer_zip_code_prefix': str, 'geolocation_zip_code_prefix': str, 'seller_zip_code_prefix': str}
 
+# Import des CSV vers PG
 for fn in fns:
     tbl=fn[35:-4].replace("_dataset", "")
     df = pd.read_csv(fn, dtype=dtype)
