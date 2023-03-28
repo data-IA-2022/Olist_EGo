@@ -1,0 +1,4 @@
+# Config pour accès BDD PG locale (docker)
+# Le password est dans le fichier ~/.pgpass
+olist: postgresql+psycopg2://postgres@localhost/olist
+olist_csv : "olist"
