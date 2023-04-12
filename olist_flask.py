@@ -1,14 +1,19 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from olist_model import *
 from sqlalchemy.orm import Session
-import yaml
+import yaml, os
 from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
 
+'''
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
-engine = create_engine(config['olist_writer'])
+OLIST=config['olist_writer']
+'''
+OLIST=os.environ['OLIST']
+print('OLIST=', OLIST)
+engine = create_engine(OLIST)
 print(engine)
 
 
