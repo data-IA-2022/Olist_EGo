@@ -2,7 +2,7 @@ name: Greetings
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "prod","prod-deploy" ]
 
 env:
   OLIST: ${{ secrets.OLIST }}
