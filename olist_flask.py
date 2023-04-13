@@ -5,7 +5,7 @@ import yaml, os
 from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
-key="ee55f77145dc4e62b3d480efbdec7589" # Clé d'accès à l'API - sécurité
+secret="ee55f77145dc4e62b3d480efbdec7589" # Clé d'accès à l'API - sécurité
 '''
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
@@ -21,13 +21,18 @@ print(engine)
 def hello_world():
     with Session(engine) as session:
         it = session.query(ProductCategory).all()
-    return render_template('olist_trad.html', it=it)
+    return render_template('olist_trad.html', it=it, key=secret)
 
 
 @app.route("/api/categories", methods=['GET'])
 def cat_list():
     # Vérification que la requète est authentifiée
-    if 'Subscription-Key' not in request.headers or request.headers['Subscription-Key'] != key:
+    key=''
+    if 'key' in request.form:
+        key=request.form['key']
+    if 'Subscription-Key' in request.headers:
+        key=request.headers['Subscription-Key']
+    if key != secret:
         return Response('Pas OK', 401)
     # Récupère la liste des ProductCategory
     with Session(engine) as session:
@@ -37,8 +42,13 @@ def cat_list():
 
 @app.route("/api/category", methods=['POST'])
 def cat_update():
-    # Vérification que la requète est authentifiée
-    if 'Subscription-Key' not in request.headers or request.headers['Subscription-Key'] != key:
+    # Vérification que la requête est authentifiée
+    key=''
+    if 'key' in request.form:
+        key=request.form['key']
+    if 'Subscription-Key' in request.headers:
+        key=request.headers['Subscription-Key']
+    if key != secret:
         return Response('Pas OK', 401)
     # Récupère les paramètres 'cat' et 'fr' de la requète
     pk=request.form['cat']
