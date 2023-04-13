@@ -27,5 +27,12 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
 
+      - uses: webfactory/ssh-agent@v0.7.0
+          with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Transfer image
         run: docker save olist:$(date +%j) | wc
+
+      - name: test SSH
+        run: ssh
