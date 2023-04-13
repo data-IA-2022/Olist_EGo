@@ -10,6 +10,7 @@ env:
 jobs:
   greeting:
     runs-on: ubuntu-latest
+    environment: Env1
     permissions:
       issues: write
       pull-requests: write
