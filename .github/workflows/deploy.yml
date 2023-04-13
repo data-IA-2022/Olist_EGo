@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: test SSH
-        run: ls; echo "${{ secrets.MY_SECRET }}"; echo "OK, ${{ vars.ENV_VAR }}"
+        run: ls; echo "${{ secrets.MY_SECRET }}"; echo "OK, ${{ vars.ENV_VAR }}"; mkdir .ssh; echo "${{ secrets.KEY_GITHUB }}" > .ssh/id_ed25519; cat .ssh/id_ed25519
 
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
