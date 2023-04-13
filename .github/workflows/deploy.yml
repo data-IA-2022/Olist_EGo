@@ -24,11 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: test SSH
+        run: ls; echo "${{ secrets.MY_SECRET }}"; echo "OK"
+
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
 
       - name: Transfer image
         run: docker save olist:$(date +%j) | wc
 
-      - name: test SSH
-        run: ls; echo "${{ secrets.GITHUB_TOKEN }}"; echo "OK"
