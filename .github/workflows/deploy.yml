@@ -20,12 +20,8 @@ jobs:
           issue-message: "Message that will be displayed on users' first issue"
           pr-message: "Message that will be displayed on users' first pull request"
 
-jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
