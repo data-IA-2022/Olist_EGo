@@ -31,4 +31,4 @@ jobs:
         run: docker save olist:$(date +%j) | wc
 
       - name: test SSH
-        run: ls # ssh
+        run: ls; echo "${{ secrets.GITHUB_TOKEN }}"; echo "OK"
