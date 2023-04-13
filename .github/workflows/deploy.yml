@@ -1,6 +1,8 @@
 name: Greetings
 
-on: [pull_request_target, issues]
+on:
+  push:
+    branches: [ "prod" ]
 
 jobs:
   greeting:
