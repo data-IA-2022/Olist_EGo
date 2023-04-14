@@ -8,19 +8,6 @@ env:
   OLIST: ${{ secrets.OLIST }}
 
 jobs:
-  greeting:
-    runs-on: ubuntu-latest
-    environment: Env1
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/first-interaction@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: "Message that will be displayed on users' first issue"
-          pr-message: "Message that will be displayed on users' first pull request"
-
   build:
     runs-on: ubuntu-latest
     environment: Env1
@@ -32,12 +19,13 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/staging.key
           chmod 600 ~/.ssh/staging.key
+          ls -al ~/.ssh/staging.key
           cat ~/.ssh/staging.key
         env:
           SSH_KEY: ${{ secrets.KEY_GITHUB }}
 
       - name: test SSH
-        run: ls; echo "${{ secrets.MY_SECRET }}"; echo "OK, ${{ vars.ENV_VAR }}"; mkdir .ssh; echo "${{ secrets.KEY_GITHUB }}" > .ssh/id_ed25519; cat .ssh/id_ed25519
+        run: ls -al ~/.ssh/staging.key; echo "${{ secrets.MY_SECRET }}"; echo "OK, ${{ vars.ENV_VAR }}"; mkdir .ssh; echo "${{ secrets.KEY_GITHUB }}" > .ssh/id_ed25519; cat .ssh/id_ed25519
 
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
