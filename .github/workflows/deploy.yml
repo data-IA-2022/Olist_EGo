@@ -32,10 +32,10 @@ jobs:
           echo "OK, ${{ vars.ENV_VAR }}";
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag olist:github
-
-      - name: Transfer image
         run: |
-          echo "Transfert olist:github"
+          docker build . --file Dockerfile --tag olist:github
+          echo 'taille'
+          docker save olist:github | wc
+          echo 'Transfert'
           docker save olist:github | ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker load'
 
