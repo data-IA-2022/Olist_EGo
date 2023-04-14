@@ -27,7 +27,7 @@ jobs:
       - name: test SSH
         run: |
           ls -al ~/.ssh/id_ed_github;
-          ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@$MAME 'pwd'
+          ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'pwd'
           echo "${{ secrets.MY_SECRET }}";
           echo "OK, ${{ vars.ENV_VAR }}";
 
