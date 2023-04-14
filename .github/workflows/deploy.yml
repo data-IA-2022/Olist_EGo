@@ -18,15 +18,15 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          ls -al ~/.ssh/staging.key
-          cat ~/.ssh/staging.key
+          chmod 600 ~/.ssh/id_ed_github
+          ls -al ~/.ssh/id_ed_github
+          cat ~/.ssh/id_ed_github
         env:
           SSH_KEY: ${{ secrets.KEY_GITHUB }}
 
       - name: test SSH
         run: |
-          ls -al ~/.ssh/staging.key;
+          ls -al ~/.ssh/id_ed_github;
           ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@$MAME 'pwd'
           echo "${{ secrets.MY_SECRET }}";
           echo "OK, ${{ vars.ENV_VAR }}";
