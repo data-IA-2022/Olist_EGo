@@ -17,7 +17,7 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
+          echo "$SSH_KEY" > ~/.ssh/id_ed_github
           chmod 600 ~/.ssh/id_ed_github
           ls -al ~/.ssh/id_ed_github
           cat ~/.ssh/id_ed_github
