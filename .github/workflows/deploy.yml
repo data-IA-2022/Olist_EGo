@@ -25,7 +25,11 @@ jobs:
           SSH_KEY: ${{ secrets.KEY_GITHUB }}
 
       - name: test SSH
-        run: ls -al ~/.ssh/staging.key; echo "${{ secrets.MY_SECRET }}"; echo "OK, ${{ vars.ENV_VAR }}"; mkdir .ssh; echo "${{ secrets.KEY_GITHUB }}" > .ssh/id_ed25519; cat .ssh/id_ed25519
+        run: |
+          ls -al ~/.ssh/staging.key;
+          ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@$MAME 'pwd'
+          echo "${{ secrets.MY_SECRET }}";
+          echo "OK, ${{ vars.ENV_VAR }}";
 
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
