@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "prod" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Env1
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_ed_github
+          chmod 600 ~/.ssh/id_ed_github
+        env:
+          SSH_KEY: ${{ secrets.KEY_GITHUB }}
+
+      - name: test SSH
+        run: |
+          ls -al ~/.ssh/id_ed_github;
+          ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'pwd'
+          echo "${{ secrets.MY_SECRET }}";
+          echo "OK, ${{ vars.ENV_VAR }}";
+
+      - name: Build the Docker image
+        run: |
+          docker build . --file Dockerfile --tag olist:github
+          #echo 'taille bzip2'
+          #docker save olist:github | bzip2 | wc
+          echo 'Transfert'
+          docker save olist:github | bzip2 | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'bunzip2 | docker load'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker images'
+
