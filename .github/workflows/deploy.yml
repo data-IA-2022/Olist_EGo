@@ -37,5 +37,5 @@ jobs:
           echo 'taille'
           docker save olist:github | wc
           echo 'Transfert'
-          docker save olist:github | ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker load'
+          docker save olist:github | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker load'
 
