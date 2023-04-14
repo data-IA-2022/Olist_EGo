@@ -32,8 +32,8 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --file Dockerfile --tag olist:github
-          echo 'taille'
-          docker save olist:github | wc
+          echo 'taille bzip2'
+          docker save olist:github | bzip2 | wc
           echo 'Transfert'
           docker save olist:github | bzip2 | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'bunzip2 | docker load'
 
