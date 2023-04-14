@@ -19,8 +19,6 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed_github
           chmod 600 ~/.ssh/id_ed_github
-          ls -al ~/.ssh/id_ed_github
-          cat ~/.ssh/id_ed_github
         env:
           SSH_KEY: ${{ secrets.KEY_GITHUB }}
 
@@ -37,5 +35,5 @@ jobs:
           echo 'taille'
           docker save olist:github | wc
           echo 'Transfert'
-          docker save olist:github | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker load'
+          docker save olist:github | bzip2 | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'bunzip2 | docker load'
 
