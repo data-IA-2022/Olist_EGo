@@ -23,8 +23,6 @@ jobs:
         run: |
           ls -al ~/.ssh/id_ed_github;
           ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'pwd'
-          echo "${{ secrets.MY_SECRET }}";
-          echo "OK, ${{ vars.ENV_VAR }}";
 
       - name: Build the Docker image
         run: |
@@ -34,4 +32,8 @@ jobs:
           echo 'Transfert'
           docker save olist:github | bzip2 | ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'bunzip2 | docker load'
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker images'
+          # Stop & remove
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker stop olist-github; docker rm olist-github'
+          # Run
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker run -e OLIST="${{ secrets.OLIST_DB_URL }}" --network host --name olist-github olist:github'
 

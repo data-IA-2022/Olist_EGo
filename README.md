@@ -10,7 +10,6 @@ Exemple projet Olist
 conda activate dataIA
 # Execution locale (BDD docker)
 OLIST='postgresql://postgres@docker-postgres/olist' flask --app olist_flask run --port 5099 --debug
-
 ```
 
 # Table geolocation bis:
