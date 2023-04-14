@@ -35,5 +35,7 @@ jobs:
         run: docker build . --file Dockerfile --tag olist:$(date +%j)
 
       - name: Transfer image
-        run: docker save olist:$(date +%j) | wc
+        run: |
+          echo "Transfert olist:$(date +%j)"
+          docker save olist:$(date +%j) | ssh -o StrictHostKeyChecking=no -f -i ~/.ssh/id_ed_github github@datalab.myconnectech.fr 'docker load'
 
