@@ -11,6 +11,11 @@ conda activate dataIA
 # Execution locale (BDD docker)
 OLIST='postgresql://postgres@docker-postgres/olist' flask --app olist_flask run --port 5099 --debug
 ```
+# Docker Datalab
+
+Utiliser la clé ~/.ssh/id_ed_github qui permet de se connecter sur $DATALAB (user github)  
+Copier contenu dans "Env1", secret "SSH_KEY"   
+Créer secret "OLIST_DB_URL" avec "postgresql://writer:****@127.0.0.1/olist" (BDD localhost sur VM)
 
 # Table geolocation bis:
 
